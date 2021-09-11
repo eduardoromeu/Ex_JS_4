@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>PixBank</title>
+        <link rel="shortcut icon" href="https://icons.getbootstrap.com/assets/icons/x-diamond.svg">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@5.1.0/dist/cyborg/bootstrap.min.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" integrity="sha384-tKLJeE1ALTUwtXlaGjJYM3sejfssWdAaWR2s97axw4xkiAdMzQjtOjgcyw0Y50KU" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous"></script>
+        <style>
+            .modal-content {
+                background-color: var(--bs-body-bg) !important;
+            }
+            table *{
+                background-color: rgba(0, 0, 0) !important;
+            }
+        </style>
+    </head>
+
+    <body onload="LoadPage()">
+        <header>
+            <nav class="navbar navbar-expand-sm navbar-dark bg-dark border-info border-top-0 border-start-0 border-end-0">
+                <div class="container-fluid">
+                    <a class="navbar-brand bi bi-x-diamond-fill" href="#"> Pix Bank </a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                        <div class="container-fluid d-flex justify-content-end align-items-center p-0">
+                            <i class="bi bi-person-circle mx-1"></i>
+                            <p id="userName" class="me-2" style="margin-bottom: 0;" hidden>
+                            </p>
+                            <button class="btn btn-outline-info mx-2 transf-btn" onclick="transfModal.show()" hidden>Minhas Transferências</button>
+                            <button class="btn btn-outline-primary login-btn ms-2" onclick="loginModal.show()">Entrar</button>
+                            <button class="btn btn-outline-danger logoff-btn ms-2" onclick="Logoff()" hidden>Sair</button>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </header>
+
+        <main>
+            <div class="container-fluid">
+                <h4 class="title my-4 text-center">Fazer Transferência</h4>
+
+                <div class="alert alert-dismissible border border-danger p-3 text-center">
+                    <p class="mb-0">Faça login para fazer uma transferência</p>
+                </div>
+
+                <div class="alert alert-dismissible border border-success p-3 text-center" hidden>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    <p class="mb-0">Transferência Realizada!</p>
+                </div>
+
+                <form class="ts-form needs-validation text-center" novalidate>
+                    <fieldset class="border border-info p-4">
+                        <legend>Informações do destinatário</legend>
+                        <div class="row d-flex justify-content-center">
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label">Código Do Banco</label>
+                                <input type="number" class="ts-bank form-control text-dark border border-info noParsing" placeholder="Ex: 160" onkeyup="InpuType(this, false)" min="0" maxlength="3" required>
+                                <div class="invalid-feedback">
+                                    Insira um código válido!
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label">Agência</label>
+                                <input type="number" class="ts-ag form-control text-dark border border-info noParsing" placeholder=" Ex: 0003" onkeyup="InpuType(this, false)" min="0" maxlength="4" required>
+                                <div class="invalid-feedback">
+                                    Insira uma agência válida!
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label">Conta</label>
+                                <input type="number" class="ts-acc form-control text-dark border border-info noParsing" placeholder=" Ex: 123456789" onkeyup="InpuType(this, false)" min="0" maxlength="9" required>
+                                <div class="invalid-feedback">
+                                    Insira uma conta válida!
+                                </div>
+                            </div>
+                            <div class="col-md-12 mb-3">
+                                <label class="form-label">Valor</label>
+                                <div class="input-group border border-info">
+                                    <span class="input-group-text">R$</span>
+                                    <input type="number" class="ts-value form-control text-dark" placeholder=" Ex: 500,00" step="any" min="0" maxlength="none" onblur="FormatCurrency(this, false)" required>
+                                </div>
+                            </div>
+                            <div class="col-md-12 mb-3">
+                                <label class="form-label">Descrição</label>
+                                <textarea class="ts-desc form-control text-dark border border-info" rows="1"></textarea>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <label class="form-label">Data</label>
+                                <div class="input-group">
+                                    <input type="date" class="ts-date form-control text-dark border border-info border-end-0" required>
+                                    <button type="button" class="btn btn-outline-info" onclick="SetTodayDate()">Hoje</button>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <button type="submit" class="btn btn-outline-info submit-btn" onclick="SubmitTransference()" data-bs-toggle="collapse" data-bs-target="#confirmDiv" aria-expanded="false" aria-controls="confirmDiv" disabled>
+                                    Enviar
+                                </button>
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+                
+                <div id="confirmDiv" class="collapse my-4">
+                    <div class=" d-flex flex-column align-items-center">
+                        <h5 class="my-2">Confirmar Transferência</h5>
+    
+                        <table class="table table-darker table-bordered border-info" id="ts-table">
+                            <tbody>
+                                <tr>
+                                    <th class="col" style="width: 40%;">Código do Banco</th>
+                                    <td id="conf-bank"></td>
+                                </tr>
+                                <tr>
+                                    <th>Agência</th>
+                                    <td id="conf-ag"></td>
+                                </tr>
+                                <tr>
+                                    <th>Conta</th>
+                                    <td id="conf-acc"></td>
+                                </tr>
+                                <tr>
+                                    <th>Valor</th>
+                                    <td id="conf-val"></td>
+                                </tr>
+                                <tr>
+                                    <th>Descrição</th>
+                                    <td id="conf-desc"></td>
+                                </tr>
+                                <tr>
+                                    <th>Data</th>
+                                    <td id="conf-date"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+    
+                        <button class="btn btn-outline-info confirm-btn" onclick="ProcessTransference()" disabled>Confirmar Envio</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="loginModal" tabindex="-1" data-bs-backdrop="static" aria-labelledby="loginModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg modal-fullscreen-md-down">
+                    <form class="modal-content border border-info login-form needs-validation" novalidate>
+                        <div class="modal-header border-info">
+                            <h5 class="modal-title" id="loginModalLabel">Login</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row mb-3 gx-2">
+                                <div class="col-12">
+                                    <label class="form-label">Nome Completo</label>
+                                    <input type="text" id="login-name" class="form-control text-dark border border-info" required>
+                                    <div class="invalid-feedback">
+                                        Insira um nome válido!
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-3 gx-2">
+                                <label class="form-label">CPF</label>
+                                <div class="col-sm-2">
+                                    <input onkeyup="InpuType(this, 1)" type="number" id="login-cpf" class="login-cpf form-control text-dark border border-info" min="0" maxlength="3" required>
+                                </div>
+                                <label class="col-sm-auto">.</label>
+                                <div class="col-sm-2">
+                                    <input onkeyup="InpuType(this, 2)" type="number" id="login-cpf" class="login-cpf form-control text-dark border border-info" min="0" maxlength="3" required>
+                                </div>
+                                <label class="form-label col-sm-auto">.</label>
+                                <div class="col-sm-2">
+                                    <input onkeyup="InpuType(this, 3)" type="number" id="login-cpf" class="login-cpf form-control text-dark border border-info" min="0" maxlength="3" required>
+                                </div>
+                                <label class="form-label col-sm-auto">-</label>
+                                <div class="col-sm-2">
+                                    <input onkeyup="InpuType(this, 3)" type="number" id="login-cpf" class="login-cpf form-control text-dark border border-info" min="0"         maxlength="2" required>
+                                </div>
+                            </div>
+                            <div class="row mb-3 gx-2">
+                                <div class="col-12">
+                                    <label class="form-label">Senha</label>
+                                    <input type="password" id="login-pass" class="form-control text-dark border border-info" required>
+                                    <div class="invalid-feedback">
+                                        Insira uma senha válida!
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer border-info">
+                            <button type="button" class="btn" data-bs-dismiss="modal">Cancelar</button>
+                            <button type="submit" class="btn btn-outline-primary" onclick="Login()">Logar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+
+            <div class="modal fade" id="transfModal" tabindex="-1" data-bs-backdrop="static" aria-labelledby="transfModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg modal-fullscreen-md-down">
+                    <div class="modal-content border border-info">
+                        <div class="modal-header border-info">
+                            <h5 class="modal-title" id="transfModalLabel">Minhas Transferências</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body" id="tsModalBody">
+                            <p class="text-center no-transf" hidden>Não há transferências</p>
+
+                            <table class="table table-darker table-bordered border-info tsModal-table">
+                                <tbody>
+                                    <tr>
+                                        <th class="col" style="width: 40%;">Descrição</th>
+                                        <td class="tsModal-desc"></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Data</th>
+                                        <td class="tsModal-date"></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Código do Banco</th>
+                                        <td class="tsModal-bank"></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Agência</th>
+                                        <td class="tsModal-ag"></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Conta</th>
+                                        <td class="tsModal-acc"></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Valor</th>
+                                        <td class="tsModal-val"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="modal-footer border-info">
+                            <button type="submit" class="btn btn-outline-danger" onclick="ClearTransferences()" data-bs-dismiss="modal" aria-label="Close">Limpar Transferências</button>
+                            <button type="submit" class="btn btn-outline-info" data-bs-dismiss="modal" aria-label="Close">Ok</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <script src="js/bank.js"></script>
+    </body>
+</html>

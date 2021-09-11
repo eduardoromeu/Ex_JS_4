@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>CraftCalc</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.min.js" integrity="sha384-cn7l7gDp0eyniUwwAZgrzD06kc/tftFf19TOAs2zVinnD/C7E91j9yyk5//jjpt/" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous"></script>
+        <style>
+            body {
+                min-height: 100vh;
+                background-image: url(https://i.imgur.com/piFsBod.png);
+                background-size: cover;
+                background-repeat: no-repeat;
+                background-attachment: fixed;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-around;
+
+            }
+            .bg-trans {
+                background-color: rgba(248, 249, 250, 0.8);
+            }
+            @media screen and (max-width: 480px) {
+                .flex-field{
+                    display: flex;
+                    width: 100%;
+                    flex-direction: column;
+                    justify-content: space-between;
+                    align-items: center;
+                }
+            }
+        </style>
+    </head>
+
+    <body>
+        <header>
+            <div class="container d-flex justify-content-center my-1">
+                <div class="title bg-trans p-3 rounded">
+                    <h1 class="text-center">CraftCalc</h1>
+                    <h2 class="lead text-center">Calcular drop de itens no minecraft</h2>
+                </div>
+            </div>
+        </header>
+
+        <main>
+            <div class="container bg-trans rounded p-4 px-5">
+                <form>
+                    <fieldset id="mobsInputsField" class="flex-field">
+                        <legend>Selecione o mob ou insira sua probabilidade de drop</legend>
+                        <hr>
+                        <div class="mb-3 flex-field">
+                            <p class="blockquote">Mobs Pacíficos</p>
+                            
+                            <label class="form-check-label form-check-inline" for="InputCow">
+                                <input class="form-check-input" type="radio" name="InputRadio" id="InputCow">
+                                Vaca
+                            </label>
+                            <label class="form-check-label form-check-inline" for="InputChi">
+                                <input class="form-check-input" type="radio" name="InputRadio" id="InputChi">
+                                Galinha
+                            </label>
+                            <label class="form-check-label form-check-inline" for="InputSqd">
+                                <input class="form-check-input" type="radio" name="InputRadio" id="InputSqd">
+                                Lula
+                            </label>
+                            <label class="form-check-label form-check-inline" for="InputPig">
+                                <input class="form-check-input" type="radio" name="InputRadio" id="InputPig">
+                                Porco
+                            </label>
+                            <label class="form-check-label form-check-inline" for="InputShe">
+                                <input class="form-check-input" type="radio" name="InputRadio" id="InputShe">
+                                Ovelha
+                            </label>
+                            <label class="form-check-label form-check-inline" for="InputFis">
+                                <input class="form-check-input" type="radio" name="InputRadio" id="InputFis">
+                                Salmão / Bacalhau
+                            </label>
+                        </div>
+                        <hr>
+                        <div class="mb-3 flex-field">
+                            <p class="blockquote">Mobs Hostis</p>
+                            
+                            <label class="form-check-label form-check-inline" for="InputSpi">
+                                <input class="form-check-input" type="radio" name="InputRadio" id="InputSpi">
+                                Aranha
+                            </label>
+                            <label class="form-check-label form-check-inline" for="InputEnd">
+                                <input class="form-check-input" type="radio" name="InputRadio" id="InputEnd">
+                                Enderman
+                            </label>
+                            <label class="form-check-label form-check-inline" for="InputBla">
+                                <input class="form-check-input" type="radio" name="InputRadio" id="InputBla">
+                                Blaze
+                            </label>
+                            <label class="form-check-label form-check-inline" for="InputCre">
+                                <input class="form-check-input" type="radio" name="InputRadio" id="InputCre">
+                                Creeper
+                            </label>
+                            <label class="form-check-label form-check-inline" for="InputZom">
+                                <input class="form-check-input" type="radio" name="InputRadio" id="InputZom">
+                                Zombi
+                            </label>
+                            <label class="form-check-label form-check-inline" for="InputGha">
+                                <input class="form-check-input" type="radio" name="InputRadio" id="InputGha">
+                                Ghast
+                            </label>
+                            <label class="form-check-label form-check-inline" for="InputSql">
+                                <input class="form-check-input" type="radio" name="InputRadio" id="InputSql">
+                                Esqueleto
+                            </label>
+                            <label class="form-check-label form-check-inline" for="InputSlm">
+                                <input class="form-check-input" type="radio" name="InputRadio" id="InputSlm">
+                                Slime
+                            </label>
+                        </div>
+                        <hr>
+                    </fieldset>
+
+                    <fieldset>
+                        <label class="blockquote form-check-inline" for="InputPro">
+                            <input class="form-check-inline mx-0" type="checkbox" name="InputPro" id="InputPro">
+                            Inserir probabilidade de drop
+                        </label>
+                    </fieldset>
+
+                    <fieldset class="flex-field">
+                        <div class="row flex-field">
+                            <div class="col-auto">
+                                <input type="number" class="form-control" min="0" id="probInput1" disabled>
+                            </div>
+                            <div class="col-auto">
+                                <label class="col-form-label">Em</label>
+                            </div>
+                            <div class="col-auto">
+                                <input type="number" class="form-control" min="0" id="probInput2" disabled>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-auto">
+                                <span id="exampleInlin" class="form-text">
+                                  Exemplo: 1 em 170
+                                </span>
+                            </div>
+                        </div>
+                    </fieldset>
+
+                    <fieldset>
+                        <legend>Insira quantas vezes o mob foi morto</legend>
+                        <hr>
+                        <div class="row flex-field d-flex">
+                            <div class="col-auto">
+                                <input type="number" class="form-control" min="0" id="killInput">
+                            </div>
+                            <div class="col-auto">
+                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#resultModal" onclick="Calc()">Calcular</button>
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+
+            <div class="modal fade" id="resultModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="resultModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="resultModalLabel">Resultado</h5>
+                        </div>
+                        <div class="modal-body">
+                            <table class="table table-bordered table-hover">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>Chance de conseguir um drop</th>
+                                        <th>Número de kills necessárias</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="probTable">
+                                    <tr class="probRes">
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="modal-footer d-flex justify-content-between">
+                            <div id="probString">Sua chance de conseguir o item é de 60%</div>
+                            <div>
+                                <a class="btn btn-danger" href="index.html">Sair</a>
+                                <button type="button" onclick="clearRes()" class="btn btn-success" data-bs-dismiss="modal">Ok</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <script src="js/craftcalc.js"></script>
+    </body>
+</html>
