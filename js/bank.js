@@ -91,7 +91,7 @@ function LoadTransferences() {
         }
     }
 
-    if(tranfsArr.length <= 0) {
+    if(tranfsArr.length <= 0 || autenticated == false) {
         noTransf.hidden = false;
         tsModalTable[0].hidden = true;
         return;
@@ -123,6 +123,7 @@ function ClearTransferences() {
 function LoadPage() {
     autenticated = localStorage.getItem("autenticated");
     showTransfAlert = localStorage.getItem("showTransfAlert");
+    LoadTransferences();
     if(autenticated == 'true') {
         clientName = localStorage.getItem("clientName");
         clientCpf = localStorage.getItem("clientCpf");
@@ -133,7 +134,6 @@ function LoadPage() {
         userName.textContent = clientName;
         userName.hidden = false;
         submitBtn.disabled = false;
-        LoadTransferences();
         loginAlert.close();
     }
     if(showTransfAlert == "true") transfAlert.hidden = !showTransfAlert;
